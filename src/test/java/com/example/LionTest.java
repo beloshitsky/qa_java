@@ -16,30 +16,35 @@ public class LionTest {
     @Mock
     Feline feline;
 
+    private final String sex = "Самка";
+
     @Test
-    public void getKittens() {
-        Lion lion = new Lion(feline);
+    public void getKittens() throws Exception {
+        Lion lion = new Lion(feline, sex);
 
         Mockito.when(feline.getKittens()).thenReturn(3);
 
         assertEquals(3, lion.getKittens());
     }
+
     @Test
-    public void doesHaveMane() throws Exception {
-        assertTrue(new Lion("Самец").doesHaveMane());
-        assertFalse(new Lion("Самка").doesHaveMane());
+    public void doesHaveManeWithIncorrectSexShowsError() {
         assertThrows("Используйте допустимые значения пола животного - самец или самка",
-                Exception.class, () -> new Lion("Н/д"));
+                Exception.class, () -> new Lion(feline, "Н/д"));
     }
 
     @Test
     public void getFoodShowsMeat() throws Exception {
-        Lion lion = new Lion(feline);
-        lion.getFood();
+        Lion lion = new Lion(feline, sex);
+
+        List<String> expectedFood = List.of("Meat");
+
+        Mockito.when(feline.getFood(Mockito.anyString())).thenReturn(expectedFood);
+
+        List<String> actualFood = lion.getFood();
 
         Mockito.verify(feline, Mockito.times(1)).getFood(Mockito.anyString());
-        Mockito.when(feline.getFood(Mockito.anyString())).thenReturn(List.of("Meat"));
 
-        assertEquals(List.of("Meat"), lion.getFood());
+        assertEquals(expectedFood, actualFood);
     }
 }
