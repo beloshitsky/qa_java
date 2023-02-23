@@ -21,8 +21,12 @@ public class FelineTest {
     }
 
     @Test
-    public void getKittensWithKittensCount() {
+    public void getKittensWithoutKittensCount() {
         assertEquals(1, feline.getKittens());
+    }
+
+    @Test
+    public void getKittensWithKittensCount() {
         assertEquals(2, feline.getKittens(2));
     }
 }
