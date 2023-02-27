@@ -31,6 +31,6 @@ public class AnimalParameterizedTest {
 
     @Test
     public void getFoodWithAnimalKind() throws Exception {
-        assertEquals(animal.getFood(animalKind), food);
+        assertEquals(food, animal.getFood(animalKind));
     }
 }
